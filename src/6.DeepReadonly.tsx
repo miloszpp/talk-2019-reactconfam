@@ -14,9 +14,9 @@ declare const person: DeepReadonly<{
   numbers: number[];
 }>;
 
-person.name = 'b';
-person.address = { city: 'Warsaw' };
-person.address.city = 'a';
-// TS 3.4 required
-// Property 'push' does not exist on type 'readonly number[]'.ts(2339)
-person.numbers.push(5);
+// person.name = 'b';
+// person.address = { city: 'Warsaw' };
+// person.address.city = 'a';
+// // TS 3.4 required
+// // Property 'push' does not exist on type 'readonly number[]'.ts(2339)
+// person.numbers.push(5);
