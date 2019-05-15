@@ -1,23 +1,23 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
 
-type HNResponse = {
-  hits: {
+type ServerResponse = {
+  items: {
     title: string;
-    objectID: string;
+    id: string;
     url: string;
   }[]
 };
 
 export const HackerNews: React.FC = () => {
-  const [data, setData] = useState<HNResponse>({ hits: [] });
-  const [query, setQuery] = useState('react');
+  const [data, setData] = useState<ServerResponse>({ items: [] });
+  const [query, setQuery] = useState('conference');
 
   useEffect(() => {
     let ignore = false;
 
     async function fetchData() {
-      const result = await axios.get<HNResponse>('https://hn.algolia.com/api/v1/search?query=' + query);
+      const result = await axios.get<ServerResponse>(`https://chroniclingamerica.loc.gov/search/titles/results/?terms=${query}&format=json`);
       if (!ignore) setData(result.data);
     }
 
@@ -29,8 +29,8 @@ export const HackerNews: React.FC = () => {
     <>
       <input value={query} onChange={e => setQuery(e.target.value)} />
       <ul>
-        {data.hits.map(item => (
-          <li key={item.objectID}>
+        {data.items.map(item => (
+          <li key={item.id}>
             <a href={item.url}>{item.title}</a>
           </li>
         ))}
